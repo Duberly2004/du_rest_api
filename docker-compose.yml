@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  db:
+    image: mysql
+    container_name: companydb
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: mypassword
+      MYSQL_DATABASE: companydb
+      MYSQL_USER: duberly
+      MYSQL_PASSWORD: duberlypassword
+    ports:
+      - 3306:3306
+    volumes:
+      - ./db/:/docker-entrypoint-initdb.d/
+
+  app:
+    build: .
+    depends_on:
+      - db
+    ports:
+      - 3000:3000
