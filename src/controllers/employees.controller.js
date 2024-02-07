@@ -44,6 +44,7 @@ export const deleteEmployee = async (req, res) => {
 export const createEmployee = async (req, res) => {
   try {
     const { name, salary } = req.body;
+    if (!name || !salary) return res.status(400).json({ message: "Name and salary are required" });
     const [rows] = await pool.query(
       "INSERT INTO employee (name, salary) VALUES (?, ?)",
       [name, salary]
